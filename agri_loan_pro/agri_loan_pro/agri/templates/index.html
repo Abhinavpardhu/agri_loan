@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agricultural Loan Credit Scorer</title>
+    <!-- Modern Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../static/style.css">
+</head>
+<body>
+    <div class="main-container">
+        <!-- Header Section -->
+        <header class="header">
+            <h1>Agricultural Loan Credit Scorer</h1>
+            <p class="subtitle">AI-Based Loan Risk Assessment System</p>
+        </header>
+        
+        <!-- Input Form Card -->
+        <main class="card form-card">
+            <form id="loan-form" action="/prediction/" method="POST">
+                {% csrf_token %}
+                <div class="form-grid">
+                    <!-- Age -->
+                    <div class="input-group">
+                        <label for="age">Age</label>
+                        <input type="number" id="age" name="age" required min="18" max="100" placeholder="e.g. 35">
+                    </div>
+                    
+                    <!-- Land_Area -->
+                    <div class="input-group">
+                        <label for="land_area">Land_Area</label>
+                        <input type="number" step="0.1" id="land_area" name="land_area" required min="0" placeholder="e.g. 5.5">
+                    </div>
+                    
+                    <!-- Soil_Type -->
+                    <div class="input-group">
+                        <label for="soil_type">Soil_Type</label>
+                        <select id="soil_type" name="soil_type" required>
+                            <option value="" disabled selected>Select Soil Type</option>
+                            <option value="Clay">Clay</option>
+                            <option value="Sandy">Sandy</option>
+                            <option value="Loamy">Loamy</option>
+                        </select>
+                    </div>
+                    
+                    <!-- Sunlight_Hours -->
+                    <div class="input-group">
+                        <label for="sunlight_hours">Sunlight_Hours</label>
+                        <input type="number" step="0.1" id="sunlight_hours" name="sunlight_hours" required min="0" max="24" placeholder="e.g. 8.5">
+                    </div>
+                    
+                    <!-- Water_Freq -->
+                    <div class="input-group">
+                        <label for="water_freq">Water_Freq</label>
+                        <select id="water_freq" name="water_freq" required>
+                            <option value="" disabled selected>Select Frequency</option>
+                            <option value="Daily">Daily</option>
+                            <option value="Weekly">Weekly</option>
+                            <option value="Bi-weekly">Bi-weekly</option>
+                            <option value="Monthly">Monthly</option>
+                        </select>
+                    </div>
+                    
+                    <!-- Fertilizer_Type -->
+                    <div class="input-group">
+                        <label for="fertilizer_type">Fertilizer_Type</label>
+                        <select id="fertilizer_type" name="fertilizer_type" required>
+                            <option value="" disabled selected>Select Fertilizer Type</option>
+                            <option value="Organic">Organic</option>
+                            <option value="Inorganic">Inorganic</option>
+                            <option value="Mixed">Mixed</option>
+                        </select>
+                    </div>
+                    
+                    <!-- Temperature -->
+                    <div class="input-group">
+                        <label for="temperature">Temperature</label>
+                        <input type="number" step="0.1" id="temperature" name="temperature" required placeholder="e.g. 28.5">
+                    </div>
+                    
+                    <!-- Humidity -->
+                    <div class="input-group">
+                        <label for="humidity">Humidity</label>
+                        <input type="number" id="humidity" name="humidity" required min="0" max="100" placeholder="e.g. 75">
+                    </div>
+                    
+                    <!-- Past_Loan_Status -->
+                    <div class="input-group">
+                        <label for="past_loan_status">Past_Loan_Status</label>
+                        <select id="past_loan_status" name="past_loan_status" required>
+                            <option value="" disabled selected>Select Loan Status</option>
+                            <option value="Good">Good</option>
+                            <option value="Bad">Bad</option>
+                            <option value="None">None</option>
+                        </select>
+                    </div>
+                    
+                    <!-- Income -->
+                    <div class="input-group">
+                        <label for="income">Income</label>
+                        <input type="number" id="income" name="income" required min="0" placeholder="e.g. 50000">
+                    </div>
+                    
+                    <!-- Loan_Amount_Requested -->
+                    <div class="input-group">
+                        <label for="loan_amount_requested">Loan_Amount_Requested</label>
+                        <input type="number" id="loan_amount_requested" name="loan_amount_requested" required min="0" placeholder="e.g. 20000">
+                    </div>
+                </div>
+                
+                <!-- Submit Button -->
+                <button type="submit" class="submit-btn" id="submit-btn">
+                    <span id="btn-text">Predict Loan Approval</span>
+                    <span id="btn-spinner" class="spinner hidden"></span>
+                </button>
+            </form>
+        </main>
+
+        <!-- Prediction Result Section -->
+        <section id="result-section" class="card result-card hidden">
+            <h2>Analysis Result</h2>
+            <div id="result-details" class="result-details">
+                <div class="result-item">
+                    <span class="result-label">Loan Status</span>
+                    <span id="res-status" class="result-value">Pending</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">Credit Score</span>
+                    <span id="res-score" class="result-value">0/100</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">Risk Level</span>
+                    <span id="res-risk" class="result-value">Unknown</span>
+                </div>
+            </div>
+            <!-- Error messages display -->
+            <p id="error-message" class="error-text hidden"></p>
+        </section>
+    </div>
+
+    <script src="../static/script.js"></script>
+</body>
+</html>
